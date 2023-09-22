@@ -5,6 +5,7 @@
 package main.view;
 
 import javax.swing.JOptionPane;
+
 import main.core.entity.Usuario;
 import main.core.dao.UsuarioDao;
 
@@ -122,27 +123,31 @@ public class TelaLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void signupButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupButtonActionPerformed
-        // TODO add your handling code here:
+       TelaCadastro tc = new TelaCadastro();
+        tc.setVisible(true);
     }//GEN-LAST:event_signupButtonActionPerformed
 
     private void signinButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signinButtonActionPerformed
+        String login = campoLogin.getText();
+        String senha = campoSenha.getText();
         
+        UsuarioDao dao = new UsuarioDao();
+        Usuario u = dao.buscarUsuario(login);
         
-        Usuario u = new Usuario();
-        u.setLogin(campoLogin.getText());
-        u.setSenha(campoSenha.getText());
-        
-        UsuarioDao udao = new UsuarioDao();
-        udao.inserir(u);
+        if(u != null){
+            JOptionPane.showMessageDialog(rootPane, "Login realizado com sucesso!");
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Usuário não encontrado! Realize seu cadastro.");
+        }
         
         limparCampos();
-        JOptionPane.showMessageDialog(rootPane, udao);
     }//GEN-LAST:event_signinButtonActionPerformed
 
     public void limparCampos(){
     
         campoLogin.setText("");
         campoSenha.setText("");
+       
     }
     /**
      * @param args the command line arguments
