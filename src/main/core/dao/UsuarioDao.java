@@ -37,7 +37,7 @@ public class UsuarioDao {
             ps.close();
         }
     }
-        public Usuario buscarUsuario(String login){
+        public Usuario buscarUsuarioLS(String login, String senha){
             
             String sql = "SELECT ID, NOME, LOGIN, SENHA , EMAIL from usuario where LOGIN = ? and SENHA = ?";
             
@@ -48,6 +48,7 @@ public class UsuarioDao {
                 ps = ConexaoJDBC.getConexao().prepareStatement(sql);
                 
                 ps.setString(1, login);
+                ps.setString(2, senha);
                 
                 rs = ps.executeQuery(); 
                 
@@ -55,21 +56,23 @@ public class UsuarioDao {
                 if(rs.next()){
                     Usuario usuario = new Usuario();
                     
-                    usuario.setId(rs.getLong("ID"));
-                    usuario.setNome(rs.getString("NOME"));
-                    usuario.setEmail(rs.getString("EMAIL"));
                     usuario.setLogin(rs.getString("LOGIN"));
                     usuario.setSenha(rs.getString("SENHA"));
                     
                     return usuario;
                 }
                 return null;
-            }catch(SQLException e){
-                
-                e.printStackTrace();
             }
-            return null;
-        }
+        catch(SQLException e){
+    
+        }finally{
+        try {
+            ps.close();
+            rs.close();
+       }catch (SQLException ex) {}
+       }
+        return null;
         
     }
+}
 

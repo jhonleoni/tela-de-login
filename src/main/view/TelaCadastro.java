@@ -5,6 +5,9 @@
  */
 package main.view;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import main.core.dao.UsuarioDao;
 import main.core.entity.Usuario;
@@ -137,7 +140,11 @@ public class TelaCadastro extends javax.swing.JFrame {
         u.setNome(campoNome.getText());
         
         UsuarioDao udao = new UsuarioDao();
-        udao.inserir(u);
+        try {
+            udao.inserir(u);
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaCadastro.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         limparCampos();
         JOptionPane.showMessageDialog(rootPane, "Cadastro criado com sucesso!");

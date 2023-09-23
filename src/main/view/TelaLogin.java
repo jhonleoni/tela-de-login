@@ -128,11 +128,12 @@ public class TelaLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_signupButtonActionPerformed
 
     private void signinButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signinButtonActionPerformed
+
         String login = campoLogin.getText();
         String senha = campoSenha.getText();
         
         UsuarioDao dao = new UsuarioDao();
-        Usuario u = dao.buscarUsuario(login);
+        Usuario u = dao.buscarUsuarioLS(login, senha);
         
         if(u != null){
             JOptionPane.showMessageDialog(rootPane, "Login realizado com sucesso!");
